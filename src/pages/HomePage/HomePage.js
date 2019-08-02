@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseInput from '../../components/BaseInput/BaseInput';
-
+import Unsplash from 'unsplash-js';
+import PhotosContainer from '../../components/PhotosContainer/PhotosContainer'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -18,10 +19,18 @@ class HomePage extends React.Component {
         })
     }
 
+    componentDidMount() {
+        // ES Modules syntax
+
+
+
+    }
+
     render() {
         return (
             <div>
                 <BaseInput value={this.state.inputValue} handleInput={this.handleInput}/>
+                <PhotosContainer></PhotosContainer>
             </div>
         )
     }
