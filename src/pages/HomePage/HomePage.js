@@ -1,7 +1,8 @@
 import React from 'react';
-import BaseInput from '../../components/BaseInput/BaseInput';
-import Unsplash from 'unsplash-js';
-import PhotosContainer from '../../components/PhotosContainer/PhotosContainer'
+import PhotosContainer from '../../components/PhotosContainer/PhotosContainer';
+import {connect} from 'react-redux'
+import {setSearchingValue} from "../../store/actions";
+import SearchContainer from "../../components/SearchContainer/SearchContainer";
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -11,26 +12,11 @@ class HomePage extends React.Component {
         }
     }
 
-    handleInput = ({target}) => {
-        console.log(target.value);
-        this.setState({
-            ...this.state,
-            inputValue: target.value
-        })
-    }
-
-    componentDidMount() {
-        // ES Modules syntax
-
-
-
-    }
-
     render() {
         return (
             <div>
-                <BaseInput value={this.state.inputValue} handleInput={this.handleInput}/>
-                <PhotosContainer></PhotosContainer>
+                <SearchContainer/>
+                <PhotosContainer/>
             </div>
         )
     }

@@ -1,52 +1,71 @@
 import React from 'react';
-import Unsplash from "unsplash-js";
-import PhotoItem from '../PhotoItem/PhotoItem'
+import {connect} from 'react-redux';
+import {addPhotos} from '../../store/actions';
+import PhotoItem from '../PhotoItem/PhotoItem';
+import ApiInstance from "../../UnsplashApi";
+import './PhotoContainer.css';
 
 class PhotosContainer extends React.Component {
-    state = {
-        photos: null,
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            photos: null,
+        }
     }
 
     componentDidMount() {
-        const unsplash = new Unsplash({
-            
-        });
-
-        unsplash.collections.listCollections(1, 10, "popular")
-            .then(toJson => {
-                console.log(toJson);
-                return toJson.json();
-            })
-            .then(json => {
-                // Your code
-                console.log(json);
-            });
-
-        unsplash.search.photos('keyword', 1, 10)
-            .then(response => {
-                console.log(response);
-                return response.json();
-            })
-            .then(({results}) => {
-                console.log(results);
-                this.setState({
-                    ...this.state,
-                    photo: results,
-                })
-            })
+        // const unsplashApi = new ApiInstance();
+        //
+        // unsplashApi.getImagesPhotos()
+        //     .then(photos => {
+        //         // addPhotos(photos);
+        //         this.props.setPhotos(photos);
+        //         // this.setState((state, props) => {
+        //         //     return {photos};
+        //         // }, () => {
+        //         //     console.log(this.state)
+        //         // });
+        //     });
+        //
+        // console.log(this.props)
     }
 
     render() {
+        console.log(this.props)
         return (
-            <div>
-                {this.photos && this.photos.map(photo => {
+            <div className='photos'>
+                {this.props.photos && this.props.photos.map(photo => {
                     return (
-                        <PhotoItem imgUrl={photo.urls.regular} description={photo.description} key={photo.id}/>
+                        <div className='photo__item-wrap' key={photo.id}>
+                            <PhotoItem
+                                imgUrl={photo.urls.regular}
+                                description={photo.description}
+                            />
+                        </div>
                     )
                 })}
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        photos: state.photos,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    console.log('Set photos');
+    return {
+        setPhotos: photos => dispatch(addPhotos(photos))
+    }
+};
+
+PhotosContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(PhotosContainer);
 
 export default PhotosContainer;
