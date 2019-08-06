@@ -6,20 +6,28 @@ import {connect} from "react-redux";
 import ApiInstance from "../../UnsplashApi";
 
 class SearchContainer extends React.Component {
+    constructor(props) {
+        super(props)
+        this.unsplash = new ApiInstance();
+    }
 
     handleInput = ({target}) => {
         console.log(target.value);
         this.props.setSearchingValue(target.value);
+    };
+
+    componentDidMount() {
+        this.unsplash.getImagesPhotos().then(data =>
+            this.props.setPhotos(data)
+        )
     }
 
     searchDate = ({}) => {
         const unsplashApi = new ApiInstance();
-
         unsplashApi.getImagesPhotos()
             .then(photos => {
                 this.props.setPhotos(photos);
             });
-
         console.log(this.props)
     }
 
@@ -35,7 +43,9 @@ class SearchContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
+
     return {
+        photos: state.photos,
         searchingValue: state.searchingValue,
     }
 };
@@ -47,9 +57,8 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-SearchContainer = connect(
+export default SearchContainer = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(SearchContainer);
 
-export default SearchContainer;

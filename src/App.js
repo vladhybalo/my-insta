@@ -9,10 +9,11 @@ function App() {
     return (
         <div className="App">
             <Provider store={store}>
-                <HomePage ></HomePage>
+                <HomePage/>
             </Provider>
         </div>
     );
 }
 
 export default App;
+
