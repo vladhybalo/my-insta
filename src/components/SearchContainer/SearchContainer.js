@@ -17,13 +17,7 @@ class SearchContainer extends React.Component {
 
         unsplashApi.getImagesPhotos()
             .then(photos => {
-                // addPhotos(photos);
                 this.props.setPhotos(photos);
-                // this.setState((state, props) => {
-                //     return {photos};
-                // }, () => {
-                //     console.log(this.state)
-                // });
             });
 
         console.log(this.props)
@@ -52,20 +46,6 @@ const mapDispatchToProps = dispatch => {
         setPhotos: photos => dispatch(addPhotos(photos))
     }
 };
-
-
-// const mapStateToProps = (state) => {
-//     return {
-//         photos: state.photos,
-//     }
-// };
-//
-// const mapDispatchToProps = dispatch => {
-//     console.log('Set photos');
-//     return {
-//         setPhotos: photos => dispatch(addPhotos(photos))
-//     }
-// };
 
 SearchContainer = connect(
     mapStateToProps,

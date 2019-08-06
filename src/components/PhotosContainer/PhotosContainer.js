@@ -14,23 +14,6 @@ class PhotosContainer extends React.Component {
         }
     }
 
-    componentDidMount() {
-        // const unsplashApi = new ApiInstance();
-        //
-        // unsplashApi.getImagesPhotos()
-        //     .then(photos => {
-        //         // addPhotos(photos);
-        //         this.props.setPhotos(photos);
-        //         // this.setState((state, props) => {
-        //         //     return {photos};
-        //         // }, () => {
-        //         //     console.log(this.state)
-        //         // });
-        //     });
-        //
-        // console.log(this.props)
-    }
-
     render() {
         console.log(this.props)
         return (

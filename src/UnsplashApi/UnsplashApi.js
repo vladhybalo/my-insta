@@ -9,24 +9,6 @@ class UnsplashApi {
 
     }
 
-    init() {
-
-    }
-
-    getImagesCollection(keyword = 'popular') {
-        return this.unsplash.collections.listCollections(1, 10, keyword)
-            .then(toJson => {
-                console.log(toJson);
-                return toJson.json();
-            })
-            .then(data => {
-                // Your code
-                console.log(data);
-                return data;
-            });
-
-    }
-
     getImagesPhotos(keyword = 'dogs') {
         return this.unsplash.search.photos(keyword, 1, 10)
             .then(response => {
@@ -36,16 +18,9 @@ class UnsplashApi {
             .then(({results}) => {
                 console.log(results);
                 return results;
-                // this.setState({
-                //     ...this.state,
-                //     photo: results,
-                // })
             })
     }
 
 }
 
 export default UnsplashApi;
-
-
-// new UnsplashApi();

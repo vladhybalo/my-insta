@@ -14,7 +14,6 @@ function appReducer(state = initialState, action) {
                     ...(action.photos),
                 ]
             };
-
         case SET_SEARCHING_VALUE:
             return {
                 ...state,
