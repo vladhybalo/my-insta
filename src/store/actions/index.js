@@ -1,24 +1,41 @@
-export const ADD_PHOTOS = 'ADD_PHOTOS';
-export const SET_SEARCHING_VALUE = 'SET_SEARCHING_VALUE';
+import UnsplashApi from '../../UnsplashApi';
+import {ADD_PHOTOS, SET_NEW_PHOTO_COLLECTIONS} from "./actionsTypes";
 
-export function addPhotos(photos) {
-    return (dispatch)=>{
+const unsplash = new UnsplashApi();
 
- fetch().then(res=>res.josn().then(dispatch()))
+export function getNewPhotoCollection(keyword) {
+    // set current to 1 because lib use pages not infinity scrolling
+    unsplash.resetPages();
+
+    return (dispatch) => {
+        unsplash.getPhotos(keyword)
+            .then(res => {
+                console.log(res);
+                return res;
+            })
+            .then(photos => dispatch(setNewCollection(photos)));
     }
+}
 
+export function addPhotosToCollection(keyword) {
+    return (dispatch) => {
+        unsplash.getPhotos(keyword)
+            .then(photos => dispatch(addPhotos(photos)));
+    }
+}
+
+function addPhotos(photos) {
     return {
         type: ADD_PHOTOS,
         photos,
     };
 }
 
-export function setSearchingValue(searchingValue) {
+function setNewCollection(photos) {
     return {
-        type: SET_SEARCHING_VALUE,
-        searchingValue,
-    }
+        type: SET_NEW_PHOTO_COLLECTIONS,
+        photos,
+    };
 }
-
 
 // TODO add react router, thunk, dispatch (own), page for each img

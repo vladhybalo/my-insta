@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addPhotos} from '../../store/actions';
+import {getPhotos} from '../../store/actions';
 import PhotoItem from '../PhotoItem/PhotoItem';
 import ApiInstance from "../../UnsplashApi";
 import './PhotoContainer.css';
@@ -8,14 +8,11 @@ import './PhotoContainer.css';
 class PhotosContainer extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            photos: null,
-        }
+        console.log(this.props.photos);
     }
 
     render() {
-        console.log(this.props)
+        console.log(this.props);
         return (
             <div className='photos'>
                 {this.props.photos && this.props.photos.map(photo => {
@@ -33,22 +30,22 @@ class PhotosContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        photos: state.photos,
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    console.log('Set photos');
-    return {
-        setPhotos: photos => dispatch(addPhotos(photos))
-    }
-};
-
-PhotosContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(PhotosContainer);
+// const mapStateToProps = (state) => {
+//     return {
+//         photos: state.photos,
+//     }
+// };
+//
+// const mapDispatchToProps = dispatch => {
+//     console.log('Set photos');
+//     return {
+//         setPhotos: keyword => dispatch(getPhotos(keyword))
+//     }
+// };
+//
+// PhotosContainer = connect(
+//     mapStateToProps,
+//     mapDispatchToProps,
+// )(PhotosContainer);
 
 export default PhotosContainer;

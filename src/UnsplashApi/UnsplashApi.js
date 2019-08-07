@@ -1,16 +1,19 @@
-import Unsplash from "unsplash-js";
+
+import apiKeys from './apiKeys'
 
 class UnsplashApi {
-    constructor() {
-        this.unsplash = new Unsplash({
-            applicationId: "386abc91713b2544769364f9fb7cb6059b6fedee62d7abf419666387d8154352",
-            secret: "a3736a57305af7e207cdfc39f2f668f8ccc222b6b3deafe50d490a7ac0d353e0"
-        });
+    constructor(Unsplash) {
+        this.unsplash = new Unsplash(apiKeys);
 
+        this.pageNumber = 1;
     }
 
-    getImagesPhotos(keyword = 'dogs') {
-        return this.unsplash.search.photos(keyword, 1, 10)
+    resetPages() {
+        this.pageNumber = 1;
+    }
+
+    getConcretePhotos(keyword) {
+        return this.unsplash.search.photos(keyword, this.pageNumber++, 10)
             .then(response => {
                 console.log(response);
                 return response.json();
@@ -21,6 +24,18 @@ class UnsplashApi {
             })
     }
 
+    getPopularPhotos() {
+        return this.unsplash.photos.listPhotos(this.pageNumber++, 10, 'popular')
+            .then(response => response.json());
+    }
+
+    getPhotos(keyword) {
+        if (keyword) {
+            return this.getConcretePhotos(keyword);
+        } else {
+            return this.getPopularPhotos();
+        }
+    }
 }
 
 export default UnsplashApi;

@@ -1,8 +1,7 @@
-import {ADD_PHOTOS, SET_SEARCHING_VALUE} from "../actions";
+import {ADD_PHOTOS, SET_NEW_PHOTO_COLLECTIONS} from "../actions/actionsTypes";
 
 const initialState = {
     photos: null,
-    searchingValue: '',
 };
 
 function appReducer(state = initialState, action) {
@@ -11,13 +10,14 @@ function appReducer(state = initialState, action) {
             return {
                 ...state,
                 photos: [
+                    ...(state.photos || []),
                     ...(action.photos),
                 ]
             };
-        case SET_SEARCHING_VALUE:
+        case SET_NEW_PHOTO_COLLECTIONS:
             return {
                 ...state,
-                searchingValue: action.searchingValue,
+                photos: action.photos,
             };
         default:
             return state;
