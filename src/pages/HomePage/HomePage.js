@@ -1,30 +1,101 @@
 import React from 'react';
-import BaseInput from '../../components/BaseInput/BaseInput';
-
+import PhotosContainer from '../../components/PhotosContainer/PhotosContainer';
+import SearchContainer from "../../components/SearchContainer/SearchContainer";
+import {connect} from 'react-redux';
+import {getNewPhotoCollection, addPhotosToCollection} from "../../store/actions";
+import './HomePage.css';
 
 class HomePage extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = {
-            inputValue: 'base value',
-        }
+        this.inputValue = '';
+        this.searchValue = null;
     }
 
-    handleInput = ({target}) => {
-        console.log(target.value);
-        this.setState({
-            ...this.state,
-            inputValue: target.value
-        })
-    }
+    handleScroll = () => {
+        const pixelsToBottom = 200;
+        const bottomOfWindow = (document.documentElement.scrollTop + window.innerHeight + pixelsToBottom)
+            >= document.documentElement.offsetHeight;
+        if (bottomOfWindow) {
+            this.props.addPhotosToCollection(this.searchValue);
+
+            this.removeScrollListener();
+        }
+    };
+
+    addScrollListener = () => {
+        window.addEventListener('scroll', this.handleScroll);
+    };
+
+    removeScrollListener = () => {
+        window.removeEventListener('scroll', this.handleScroll);
+    };
+
+    inputSearchingValue = ({target}) => {
+        this.inputValue = target.value;
+    };
+
+    searchByEnter = event => {
+        if (event.key === 'Enter') {
+            this.searchDate();
+        }
+    };
+
+    searchDate = () => {
+        this.searchValue = this.inputValue;
+
+        this.props.getNewPhotoCollection(this.searchValue);
+    };
+
+    componentDidMount() {
+        if (!this.props.photos) {
+            this.props.getNewPhotoCollection();
+        } else {
+            this.addScrollListener();
+        }
+        // TODO ask about memory leaks
+    };
+
+    componentDidUpdate() {
+        this.addScrollListener();
+    };
+
+    componentWillUnmount() {
+       this.removeScrollListener();
+    };
 
     render() {
         return (
-            <div>
-                <BaseInput value={this.state.inputValue} handleInput={this.handleInput}/>
+            <div className='home-page'>
+                <SearchContainer
+                    handleInput={this.inputSearchingValue}
+                    searchDate={this.searchDate}
+                    getPhotos={this.props.getNewPhotoCollection}
+                    searchByEnter={this.searchByEnter}
+                />
+                <PhotosContainer photos={this.props.photos}/>
             </div>
         )
-    }
+    };
 }
+
+const mapStateToProps = (state) => {
+    return {
+        photos: state.photos,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getNewPhotoCollection: keyword => dispatch(getNewPhotoCollection(keyword)),
+        addPhotosToCollection: photos => dispatch(addPhotosToCollection(photos))
+    }
+};
+
+HomePage = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(HomePage);
 
 export default HomePage;

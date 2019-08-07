@@ -1,0 +1,12 @@
+.photos {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.photo__item-wrap {
+    max-width: 300px;
+    width: 100%;
+    padding: 1em;
+}

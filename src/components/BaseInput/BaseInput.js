@@ -1,8 +1,9 @@
 import React from 'react';
+import './BaseInput.css';
 
-function BaseInput({value, handleInput}) {
+function BaseInput({value, handleInput, handleEnterPressing}) {
     return (
-        <input type="text" defaultValue={value} onInput={handleInput}/>
+        <input onKeyPress={handleEnterPressing} className='base-input' type="text" defaultValue={value} onInput={handleInput}/>
     )
 }
 

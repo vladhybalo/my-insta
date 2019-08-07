@@ -1,0 +1,16 @@
+.base-button {
+    padding: .3em .7em;
+    cursor: pointer;
+}
+
+.base-button:hover {
+
+}
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
