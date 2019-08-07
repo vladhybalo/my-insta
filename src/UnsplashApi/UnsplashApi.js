@@ -1,5 +1,4 @@
-
-import apiKeys from './apiKeys'
+import apiKeys from './apiKeys';
 
 class UnsplashApi {
     constructor(Unsplash) {
@@ -35,6 +34,11 @@ class UnsplashApi {
         } else {
             return this.getPopularPhotos();
         }
+    }
+
+    getPhotoById(id) {
+        return this.unsplash.photos.getPhoto(id, 1920, 1080, [0, 0, 1920, 1080])
+            .then(res => res.json());
     }
 }
 

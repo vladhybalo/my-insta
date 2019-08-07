@@ -3,6 +3,7 @@ import PhotosContainer from '../../components/PhotosContainer/PhotosContainer';
 import SearchContainer from "../../components/SearchContainer/SearchContainer";
 import {connect} from 'react-redux';
 import {getNewPhotoCollection, addPhotosToCollection} from "../../store/actions";
+import './HomePage.css';
 
 class HomePage extends React.Component {
 
@@ -48,7 +49,12 @@ class HomePage extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getNewPhotoCollection();
+        if (!this.props.photos) {
+            this.props.getNewPhotoCollection();
+        } else {
+            this.addScrollListener();
+        }
+        // TODO ask about memory leaks
     };
 
     componentDidUpdate() {
@@ -61,7 +67,7 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <>
+            <div className='home-page'>
                 <SearchContainer
                     handleInput={this.inputSearchingValue}
                     searchDate={this.searchDate}
@@ -69,7 +75,7 @@ class HomePage extends React.Component {
                     searchByEnter={this.searchByEnter}
                 />
                 <PhotosContainer photos={this.props.photos}/>
-            </>
+            </div>
         )
     };
 }

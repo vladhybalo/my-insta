@@ -1,0 +1,13 @@
+.photo-page {
+    padding: 1rem;
+}
+
+.photo-page__img-wrap {
+    width: 100%;
+    height: calc(100vh - 120px);
+}
+
+.photo-page__text-wrap {
+    width: auto;
+    padding: 1rem 1rem 0;
+}
